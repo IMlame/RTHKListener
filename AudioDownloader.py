@@ -30,11 +30,13 @@ def get_audio_urls(radio_num, date):
         # grab m3u8 audio urls from segment html
         r = requests.get("https://programme.rthk.hk/channel/radio/" + url)
         m3u8_url = re.search("hlsStreamUrl\[0\]='(.*)'", r.text)
-        audio_urls.append(m3u8_url.group(1))
+        # ensure m3u8_url is found
+        if m3u8_url is not None:
+            audio_urls.append(m3u8_url.group(1))
     return audio_urls
 
 
-def download_audio(path: str, url, date):
+def download_audio(path: str, url):
     # format of audio file name: "index-date-radio-broadcast_name"
     audio_file_name = generate_audio_file_name(path, url)
 
@@ -81,7 +83,7 @@ def audio_file_updater():
     for url in urls:
         if is_new(url):
             print("Downloading", url + ".wav")
-            download_audio("out", url, date)
+            download_audio("out", url)
 
     oldest_file = FileInfo.get_oldest_file("out")
     # remove files if number of audio files is larger than queue size, but only if files are from an older date

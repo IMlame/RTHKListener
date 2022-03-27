@@ -5,6 +5,7 @@ import os
 def get_file_index(file):
     return get_file_data(file, 0)
 
+
 def get_file_date(file):
     return get_file_data(file, 1)
 
@@ -16,6 +17,7 @@ def get_file_data(file, data_type):
     if data_type == 0:
         return int(a[data_type])
     return a[data_type]
+
 
 def get_files_in_directory(path: str):
     # find all audio files
