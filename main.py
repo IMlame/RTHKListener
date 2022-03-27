@@ -1,6 +1,29 @@
-import subprocess
+import threading
+import time
+import sys
 
-bashCommand = "ffmpeg -i https://rthkaod3-vh.akamaihd.net/i/m4a/radio/archive/radio2/talkwithyou/m4a/20220124.m4a/master.m3u8 -t 10 out/output.wav"
-# bashCommand = ""
-process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
-output, error = process.communicate()
+import AudioDownloader
+import AudioPlayer
+
+def main(args):
+    # main thread
+    t1 = threading.Thread(target=audio_download, name='audio_downloader')
+    # listener thread
+    t2 = threading.Thread(target=audio_play, name='audio_player')
+
+    t1.start()
+    t2.start()
+
+def audio_download():
+    while True:
+        # attempt to download audio clips every 60 minutes
+        AudioDownloader.audio_file_updater()
+        time.sleep(60*60)
+
+def audio_play():
+    while True:
+        audio_file = AudioPlayer.next_audio_file()
+        AudioPlayer.play_audio(audio_file)
+
+if __name__ == "__main__":
+    main(sys.argv)
