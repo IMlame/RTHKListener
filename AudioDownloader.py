@@ -7,7 +7,7 @@ import FileInfo
 
 queue_size = 10
 radio_num = 2
-days_offset = 2
+days_offset = 0
 
 offset_date = datetime.today() - timedelta(days=2)
 
