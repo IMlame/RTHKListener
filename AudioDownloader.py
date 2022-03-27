@@ -74,9 +74,9 @@ def audio_file_updater():
     global offset_date
     global date
 
-    offset_date = datetime.today() - timedelta(days=2)
+    offset_date = datetime.today() - timedelta(days=days_offset)
     date = str(offset_date.strftime("%Y%m%d"))
-    
+
     urls = get_audio_urls(radio_num, date)
     for url in urls:
         if is_new(url):
