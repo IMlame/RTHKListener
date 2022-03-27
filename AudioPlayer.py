@@ -41,11 +41,11 @@ def next_audio_file():
         file_name = FileInfo.get_oldest_file(path="out")
 
     audio_file_number = FileInfo.get_file_index(file_name)
-    print("Now playing:", file_name)
     return file_name
 
 
 def play_audio(audio_file):
+    print("Now playing:", audio_file)
     # open a wav format music
     f = wave.open(f"out/{audio_file}", "rb")
     # instantiate PyAudio
